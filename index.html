@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-biome="cosmic">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>StudyFlow — Grade 9 Academic Operating System</title>
+    <meta name="description" content="Offline-first Grade 9 NCERT Academic Operating System — Syllabus mastery, Routine Matrix, Active Recall, and ISRO Mission Control." />
+    <meta name="theme-color" content="#07090E" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+    <!-- Dynamic overrides injected by js/themes.js -->
+    <style id="sf-theme-vars"></style>
+    <style id="sf-exam-danger-vars"></style>
+</head>
+<body>
+
+<!-- Cosmic Aurora Ambient Mesh -->
+<div id="aurora-bg" aria-hidden="true"></div>
+
+<div id="app">
+
+    <!-- ═══ TOP HEADER ═══ -->
+    <header id="app-header">
+        <div class="header-content">
+            <div class="header-left">
+                <button class="app-logo app-logo-btn" id="logo-home-btn" aria-label="Go to Dashboard" title="Scroll to top / Dashboard">
+                    <span class="logo-icon">⚡</span>
+                    <span class="logo-text">StudyFlow</span>
+                </button>
+                <span class="header-subtitle" id="header-biome-label">Grade 9 · NCERT Flagship OS</span>
+            </div>
+
+            <!-- Live Clock & Date Pill (Desktop Center) -->
+            <div class="header-center">
+                <div class="clock-pill" id="header-clock-pill" title="Current Indian Standard Time (IST)">
+                    <span class="live-dot"></span>
+                    <span id="digital-clock" class="clock-time">06:30:00 PM</span>
+                    <span class="clock-sep">|</span>
+                    <span id="digital-date" class="clock-date">Wed, 14 Oct 2026</span>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <!-- ISRO Mission Rank + XP + Streak Combined Pill -->
+                <div id="mission-badge" class="mission-badge" title="ISRO Mission Rank & XP — Click to open Mission Control">
+                    <span id="rank-emoji" class="rank-emoji">🛸</span>
+                    <div class="rank-info">
+                        <div class="rank-top-row">
+                            <span id="rank-name" class="rank-name">Trainee</span>
+                            <span id="xp-count" class="xp-count">0 XP</span>
+                        </div>
+                        <div class="xp-bar-wrap">
+                            <div id="xp-bar-fill" class="xp-bar-fill" style="width: 15%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Daily Streak Pill -->
+                <div id="streak-badge" class="streak-badge" title="Daily Completion Streak">
+                    <span class="streak-fire">🔥</span>
+                    <span id="streak-count" class="streak-count">0</span>
+                    <span class="streak-label">day streak</span>
+                </div>
+
+                <!-- Biome / Theme Switcher -->
+                <button id="theme-toggle" class="theme-toggle" title="Cycle Biome / Theme (Auto · Morning Dew · Deep Focus · Cosmic Aurora)" aria-label="Toggle theme">
+                    <svg class="theme-icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"/>
+                        <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                    <svg class="theme-icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
+
+                <!-- Focus / Pomodoro Button -->
+                <button id="focus-btn" class="icon-btn" title="Zen Focus Mode — Pomodoro & Ambient Audio" aria-label="Focus Mode">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                </button>
+
+                <!-- Backup Export Button -->
+                <button id="export-btn" class="icon-btn" title="Download Full JSON Backup" aria-label="Export Data">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                </button>
+
+                <!-- Import Restore Button -->
+                <button id="import-btn" class="icon-btn" title="Restore / Merge from Backup JSON" aria-label="Restore Backup">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="17 8 12 3 7 8"/>
+                        <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                </button>
+                <input type="file" id="import-file-input" accept=".json,application/json" class="hidden" aria-label="Select backup file" />
+
+                <!-- Notification Reminder Button -->
+                <button id="notif-btn" class="icon-btn" title="Enable Daily Study Reminders" aria-label="Enable Notifications">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ═══ GOLD STAR PERFECT DAY BANNER ═══ -->
+    <div id="gold-badge" class="gold-badge hidden" role="status" aria-live="polite">
+        <span class="gold-star-anim">⭐</span>
+        <div class="gold-text-wrap">
+            <span class="gold-title">Perfect Day Achieved!</span>
+            <span class="gold-sub">Every task scheduled for today is complete 🎉</span>
+        </div>
+    </div>
+
+    <!-- ═══ WORKSPACE BODY (SIDEBAR NAV + MAIN VIEWS) ═══ -->
+    <div class="workspace-shell">
+
+        <!-- ═══ NAVIGATION (Left Rail on Desktop / Bottom Bar on Mobile) ═══ -->
+        <nav id="bottom-nav" role="navigation" aria-label="Main navigation">
+            <button class="nav-btn active" data-view="dashboard" id="nav-dashboard" aria-label="Dashboard" aria-selected="true">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
+                    <rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/>
+                </svg>
+                <span>Dashboard</span>
+            </button>
+
+            <button class="nav-btn" data-view="subjects" id="nav-subjects" aria-label="Subjects" aria-selected="false">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                </svg>
+                <span>Subjects</span>
+            </button>
+
+            <button class="nav-btn" data-view="roadmap" id="nav-roadmap" aria-label="60-Day Roadmap" aria-selected="false">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+                <span>Roadmap</span>
+            </button>
+
+            <button class="nav-btn nav-fab-btn" id="nav-quickadd" aria-label="Add new item" aria-expanded="false">
+                <div class="fab-circle" id="fab-circle">
+                    <svg class="fab-icon" id="fab-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                        <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                    </svg>
+                </div>
+                <span>Quick Add</span>
+            </button>
+
+            <button class="nav-btn" data-view="flashcards" id="nav-flashcards" aria-label="Flashcards" aria-selected="false">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="4" width="20" height="16" rx="2"/><path d="M12 8v8"/><path d="M8 12h8"/>
+                </svg>
+                <span>Flashcards</span>
+            </button>
+
+            <button class="nav-btn" data-view="mission" id="nav-mission" aria-label="ISRO Mission Control" aria-selected="false">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
+                    <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
+                </svg>
+                <span>Mission</span>
+            </button>
+
+            <button class="nav-btn" data-view="search" id="nav-search" aria-label="Search" aria-selected="false">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                </svg>
+                <span>Search</span>
+            </button>
+        </nav>
+
+        <!-- ═══ MAIN VIEWS CONTAINER ═══ -->
+        <main id="app-main" role="main">
+
+            <!-- ──────────────────────────────────────────────────
+                 VIEW 1: DASHBOARD (2-Column Desktop Command Center)
+                 ────────────────────────────────────────────────── -->
+            <div id="view-dashboard" class="view active" role="tabpanel" aria-label="Dashboard">
+                <div class="view-scroll">
+
+                    <!-- TOP FULL-WIDTH SPAN -->
+                    <div class="dash-top-span">
+
+                        <!-- Hero Greeting + Quote + Exam Countdown Row -->
+                        <div class="hero-command-grid">
+                            <div class="hero-welcome-card glass-card">
+                                <div class="hero-top-meta">
+                                    <span id="biome-badge" class="biome-pill">🌌 Cosmic Aurora Biome</span>
+                                    <button class="btn btn-sm btn-primary" id="hero-add-btn" onclick="document.getElementById('nav-quickadd')?.click()">+ Add Task</button>
+                                </div>
+                                <div class="dashboard-greeting">
+                                    <h1 id="greeting-text" class="greeting-title">Good Evening, Prathmesh! 👋</h1>
+                                    <p class="greeting-sub" id="greeting-sub">Stay consistent. Every completed chapter brings ISRO closer.</p>
+                                </div>
+                                <!-- Daily Motivation Quote -->
+                                <div id="quote-card" class="quote-card" aria-label="Daily motivational quote">
+                                    <div class="quote-icon">💡</div>
+                                    <blockquote class="quote-text">Loading today's quote…</blockquote>
+                                    <cite class="quote-author">— StudyFlow</cite>
+                                </div>
+                            </div>
+
+                            <!-- Exam Countdown Widget -->
+                            <div id="exam-countdown-widget" class="exam-countdown-widget glass-card" aria-label="Exam countdown">
+                                <div class="exam-widget-header">
+                                    <span class="exam-widget-tag">🎯 Exam Radar</span>
+                                </div>
+                                <div id="exam-countdown-inner" class="exam-countdown-inner">
+                                    <div class="exam-placeholder">
+                                        <span>🎯</span>
+                                        <span id="exam-placeholder-text">No exam set — </span>
+                                        <button id="set-exam-btn" class="exam-link-btn">Set countdown</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Overdue Backlog Alert Banner & Collapsible Drawer -->
+                        <div id="overdue-alert-banner" class="overdue-banner hidden">
+                            <div class="overdue-banner-left">
+                                <span class="overdue-icon">⚠️</span>
+                                <div>
+                                    <h4 class="overdue-title">Overdue Backlog Detected</h4>
+                                    <p id="overdue-count-text" class="overdue-sub">You have unfinished tasks from earlier days.</p>
+                                </div>
+                            </div>
+                            <button id="overdue-toggle-btn" class="btn btn-sm btn-warning">View Backlog ▼</button>
+                        </div>
+                        <div id="overdue-drawer" class="overdue-drawer glass-card hidden">
+                            <div id="overdue-items-list" class="task-list"></div>
+                        </div>
+
+                        <!-- 5-Card Metrics Row (Due Today, Pending, Done, Weekly Ring, Syllabus Ring) -->
+                        <div class="stats-row" id="stats-row">
+                            <div class="stat-card glass-card" id="stat-card-today">
+                                <div class="stat-icon">📅</div>
+                                <div class="stat-number" id="stat-today">0</div>
+                                <div class="stat-label">Due Today</div>
+                            </div>
+                            <div class="stat-card stat-accent glass-card" id="stat-card-pending">
+                                <div class="stat-icon">⏳</div>
+                                <div class="stat-number" id="stat-pending">0</div>
+                                <div class="stat-label">Pending</div>
+                            </div>
+                            <div class="stat-card stat-success glass-card" id="stat-card-done">
+                                <div class="stat-icon">✅</div>
+                                <div class="stat-number" id="stat-done">0</div>
+                                <div class="stat-label">Completed</div>
+                            </div>
+                            <!-- Weekly Progress Ring Card -->
+                            <div class="stat-card stat-weekly glass-card" id="stat-card-weekly">
+                                <div class="weekly-ring-wrap">
+                                    <svg class="weekly-ring-svg" viewBox="0 0 36 36">
+                                        <circle class="weekly-ring-bg" cx="18" cy="18" r="15.9" fill="none" stroke-width="3"/>
+                                        <circle id="weekly-ring-fill" class="weekly-ring-progress" cx="18" cy="18" r="15.9" fill="none" stroke-width="3" stroke-dasharray="0 100" stroke-linecap="round" transform="rotate(-90 18 18)"/>
+                                    </svg>
+                                    <span id="weekly-ring-pct" class="weekly-ring-pct">0%</span>
+                                </div>
+                                <div class="stat-label">This Week</div>
+                            </div>
+                            <!-- Overall Syllabus Mastery Ring Card -->
+                            <div class="stat-card stat-weekly glass-card" id="stat-card-syllabus">
+                                <div class="weekly-ring-wrap">
+                                    <svg class="weekly-ring-svg" viewBox="0 0 36 36">
+                                        <circle class="weekly-ring-bg" cx="18" cy="18" r="15.9" fill="none" stroke-width="3"/>
+                                        <circle id="syllabus-ring-fill" class="weekly-ring-progress" cx="18" cy="18" r="15.9" fill="none" stroke-width="3" stroke-dasharray="0 100" stroke-linecap="round" transform="rotate(-90 18 18)"/>
+                                    </svg>
+                                    <span id="syllabus-ring-pct" class="weekly-ring-pct">0%</span>
+                                </div>
+                                <div class="stat-label">Syllabus</div>
+                            </div>
+                        </div>
+
+                    </div><!-- /.dash-top-span -->
+
+                    <!-- BOTTOM TWO-COLUMN DESKTOP SPLIT -->
+                    <div class="dash-bottom-split">
+
+                        <!-- LEFT COLUMN: Tasks & Daily Roadmap Pairing -->
+                        <div class="dash-col-main">
+
+                            <!-- Today's Heavy + Light Roadmap Pairing Card -->
+                            <section class="dash-section glass-card" id="section-roadmap-today">
+                                <div class="section-header">
+                                    <h2 class="section-title">🧭 Today's Heavy + Light Study Pairing</h2>
+                                    <div class="roadmap-day-nav">
+                                        <button class="icon-btn btn-xs" id="rm-prev-day" title="Previous Day">◀</button>
+                                        <span id="rm-day-badge" class="count-badge">Today</span>
+                                        <button class="icon-btn btn-xs" id="rm-next-day" title="Next Day">▶</button>
+                                    </div>
+                                </div>
+                                <div id="priority-pair-container" class="priority-pair-grid">
+                                    <div class="pair-slot glass-subcard">
+                                        <span class="pair-tag tag-heavy">Slot 1 · Heavy Focus</span>
+                                        <p class="pair-title" id="pair-heavy-title">Mathematics / Science Concept Mastery</p>
+                                    </div>
+                                    <div class="pair-slot glass-subcard">
+                                        <span class="pair-tag tag-light">Slot 2 · Light / Language</span>
+                                        <p class="pair-title" id="pair-light-title">English / Marathi / Hindi / IT Revision</p>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Due Today -->
+                            <section class="dash-section glass-card" id="section-today">
+                                <div class="section-header">
+                                    <h2 class="section-title">📅 Due Today</h2>
+                                    <span id="today-badge" class="count-badge">0</span>
+                                </div>
+                                <div id="tasks-today" class="task-list">
+                                    <div class="empty-state" id="today-empty">
+                                        <div class="empty-icon-wrap">✨</div>
+                                        <p class="empty-title">Nothing due today!</p>
+                                        <p class="empty-sub">Enjoy your free time or get ahead on pending chapters.</p>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Pending Homework -->
+                            <section class="dash-section glass-card" id="section-pending">
+                                <div class="section-header">
+                                    <h2 class="section-title">📚 Pending Homework</h2>
+                                    <span id="pending-badge" class="count-badge badge-urgent">0</span>
+                                </div>
+                                <div id="tasks-pending" class="task-list">
+                                    <div class="empty-state" id="pending-empty">
+                                        <div class="empty-icon-wrap">🎉</div>
+                                        <p class="empty-title">All caught up!</p>
+                                        <p class="empty-sub">You're on fire. Keep going!</p>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- General Tasks -->
+                            <section class="dash-section glass-card" id="section-general">
+                                <div class="section-header">
+                                    <h2 class="section-title">📌 General Tasks</h2>
+                                    <span id="general-badge" class="count-badge">0</span>
+                                </div>
+                                <div id="tasks-general" class="task-list">
+                                    <div class="empty-state" id="general-empty">
+                                        <div class="empty-icon-wrap">📋</div>
+                                        <p class="empty-title">No general tasks</p>
+                                        <p class="empty-sub">Use + → General Task for personal reminders &amp; projects.</p>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Collapsible Completed / Done Tasks Section -->
+                            <section class="dash-section glass-card" id="section-done-today">
+                                <div class="section-header clickable-header" id="done-today-toggle">
+                                    <h2 class="section-title">✅ Completed Tasks</h2>
+                                    <span id="done-badge" class="count-badge">0</span>
+                                </div>
+                                <div id="tasks-done-today" class="task-list hidden"></div>
+                            </section>
+
+                        </div><!-- /.dash-col-main -->
+
+                        <!-- RIGHT COLUMN: Routine Matrix, Subject Progress & 90-Day Heatmap -->
+                        <div class="dash-col-side">
+
+                            <!-- Routine Matrix (Smart Daily Time-Blocking) -->
+                            <section class="dash-section glass-card" id="routine-matrix-card">
+                                <div class="section-header">
+                                    <h2 class="section-title">🗓️ Routine Matrix (IST)</h2>
+                                    <span id="routine-prime-left" class="count-badge">Prime Focus</span>
+                                </div>
+                                <div id="routine-now-banner" class="routine-now-banner">
+                                    <div class="routine-now-title" id="routine-now-text">Checking current schedule slot…</div>
+                                    <div class="routine-now-sub" id="routine-next-text">Prime Study Window</div>
+                                </div>
+                                <div id="routine-timeline" class="routine-timeline"></div>
+                            </section>
+
+                            <!-- Subject Progress Overview -->
+                            <section class="dash-section glass-card" id="section-subject-overview">
+                                <div class="section-header">
+                                    <h2 class="section-title">📊 Subject Progress</h2>
+                                </div>
+                                <div id="subject-overview" class="subject-overview-list"></div>
+                            </section>
+
+                            <!-- 90-Day GitHub-Style Study Heatmap -->
+                            <section class="dash-section glass-card" id="heatmap-card">
+                                <div class="section-header">
+                                    <h2 class="section-title">🟩 90-Day Consistency Heatmap</h2>
+                                    <span class="count-badge" id="heatmap-total-badge">Last 13 Weeks</span>
+                                </div>
+                                <div id="heatmap-months" class="heatmap-months"></div>
+                                <div id="heatmap-grid" class="heatmap-grid"></div>
+                                <div class="heatmap-legend">
+                                    <span>Less</span>
+                                    <i class="hm-cell hm-lvl-0"></i>
+                                    <i class="hm-cell hm-lvl-1"></i>
+                                    <i class="hm-cell hm-lvl-2"></i>
+                                    <i class="hm-cell hm-lvl-3"></i>
+                                    <span>More</span>
+                                </div>
+                            </section>
+
+                        </div><!-- /.dash-col-side -->
+
+                    </div><!-- /.dash-bottom-split -->
+
+                    <div class="bottom-spacer"></div>
+                </div>
+            </div>
+
+            <!-- ──────────────────────────────────────────────────
+                 VIEW 2: SUBJECTS
+                 ────────────────────────────────────────────────── -->
+            <div id="view-subjects" class="view" role="tabpanel" aria-label="Subjects">
+                <div class="view-scroll">
+                    <div class="view-head-row">
+                        <div class="view-head">
+                            <h1 class="view-title">Your Subjects</h1>
+                            <p class="view-subtitle">Grade 9 · NCERT — 4-Step Chapter Mastery + Thinking Coach</p>
+                        </div>
+                        <button class="btn btn-primary" onclick="document.getElementById('fam-add-subject')?.click()">+ New Subject</button>
+                    </div>
+                    <div id="subject-grid" class="subject-grid"></div>
+                    <div class="bottom-spacer"></div>
+                </div>
+            </div>
+
+            <!-- ──────────────────────────────────────────────────
+                 VIEW 3: 60-DAY MASTER ROADMAP
+                 ────────────────────────────────────────────────── -->
+            <div id="view-roadmap" class="view" role="tabpanel" aria-label="60-Day Roadmap">
+                <div class="view-scroll">
+                    <div class="view-head-row">
+                        <div class="view-head">
+                            <h1 class="view-title">60-Day Master Study Roadmap</h1>
+                            <p class="view-subtitle">1 Heavy Subject + 1 Light Subject daily rotation · Sundays reserved for Backlog &amp; Revision</p>
+                        </div>
+                        <div class="roadmap-controls">
+                            <input type="search" id="roadmap-search-input" class="form-input" placeholder="Filter roadmap chapters or subjects…" />
+                        </div>
+                    </div>
+                    <div class="glass-card roadmap-table-wrap">
+                        <table class="roadmap-table">
+                            <thead>
+                                <tr>
+                                    <th>Day / Date</th>
+                                    <th>Heavy Subject (Slot 1)</th>
+                                    <th>Light / Skill Subject (Slot 2)</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="roadmap-table-body"></tbody>
+                        </table>
+                    </div>
+                    <div class="bottom-spacer"></div>
+                </div>
+            </div>
+
+            <!-- ──────────────────────────────────────────────────
+                 VIEW 4: ACTIVE RECALL FLASHCARDS (3D Flip)
+                 ────────────────────────────────────────────────── -->
+            <div id="view-flashcards" class="view" role="tabpanel" aria-label="Active Recall Flashcards">
+                <div class="view-scroll">
+                    <div class="view-head-row">
+                        <div class="view-head">
+                            <h1 class="view-title">🃏 Active Recall Flashcards</h1>
+                            <p class="view-subtitle">3D Spaced Repetition Engine — Flip, Rate (Hard 1d · Good 3d · Easy 7d), Retain</p>
+                        </div>
+                        <button class="btn btn-primary" id="fc-new-card-btn">+ Create Flashcard</button>
+                    </div>
+
+                    <!-- Subject Deck Grid -->
+                    <div id="fc-decks-grid" class="fc-decks-grid"></div>
+
+                    <!-- Study Theater (Shown when practicing a deck) -->
+                    <div id="fc-study-theater" class="fc-study-theater glass-card hidden">
+                        <div class="fc-theater-top">
+                            <button class="btn btn-sm btn-ghost" id="fc-exit-study-btn">← Back to Decks</button>
+                            <span id="fc-study-deck-name" class="fc-deck-badge">Deck</span>
+                            <span id="fc-study-counter" class="count-badge">1 / 1</span>
+                        </div>
+
+                        <div class="fc-scene">
+                            <div id="fc-card-3d" class="fc-card-3d" tabindex="0" role="button" aria-label="Click to flip flashcard">
+                                <div class="fc-card-face fc-card-front">
+                                    <span class="fc-face-label">QUESTION · TAP TO FLIP</span>
+                                    <div id="fc-front-text" class="fc-card-text">Question appears here</div>
+                                </div>
+                                <div class="fc-card-face fc-card-back">
+                                    <span class="fc-face-label">ANSWER</span>
+                                    <div id="fc-back-text" class="fc-card-text">Answer appears here</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="fc-rating-row" class="fc-rating-row hidden">
+                            <button class="btn fc-rate-btn fc-rate-hard" data-days="1">😓 Hard (1d)</button>
+                            <button class="btn fc-rate-btn fc-rate-good" data-days="3">👍 Good (3d)</button>
+                            <button class="btn fc-rate-btn fc-rate-easy" data-days="7">⚡ Easy (7d)</button>
+                        </div>
+                    </div>
+
+                    <div class="bottom-spacer"></div>
+                </div>
+            </div>
+
+            <!-- ──────────────────────────────────────────────────
+                 VIEW 5: ISRO MISSION CONTROL & ANALYTICS
+                 ────────────────────────────────────────────────── -->
+            <div id="view-mission" class="view" role="tabpanel" aria-label="ISRO Mission Control">
+                <div class="view-scroll">
+                    <div class="view-head">
+                        <h1 class="view-title">🚀 ISRO Mission Control</h1>
+                        <p class="view-subtitle">Your trajectory from Aeronautical Trainee to ISRO Mission Commander</p>
+                    </div>
+
+                    <!-- Rank & Mars Rover Row -->
+                    <div class="mission-top-grid">
+                        <div class="glass-card mission-rank-card">
+                            <div class="mission-rank-head">
+                                <span id="mission-rank-emoji" class="mission-rank-icon">🛸</span>
+                                <div>
+                                    <span class="mission-rank-kicker">CURRENT DESIGNATION</span>
+                                    <h2 id="mission-rank-title" class="mission-rank-title">Aeronautical Trainee</h2>
+                                    <p id="mission-xp-sub" class="mission-xp-sub">0 XP earned · 500 XP to Payload Specialist</p>
+                                </div>
+                            </div>
+                            <div class="progress-bar-track" style="height: 10px; margin-top: 14px;">
+                                <div id="mission-xp-bar" class="progress-bar-fill" style="width: 10%"></div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card mars-rover-card">
+                            <div class="section-header">
+                                <h2 class="section-title">🪐 Mars Rover Syllabus Trajectory</h2>
+                                <span id="mars-progress-pct" class="count-badge">0% Syllabus</span>
+                            </div>
+                            <canvas id="mars-canvas" width="600" height="150" class="mars-canvas"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Skill Tracks & Study Insights -->
+                    <div class="mission-mid-grid">
+                        <div class="glass-card">
+                            <div class="section-header">
+                                <h2 class="section-title">⚡ Subject XP Skill Tracks</h2>
+                            </div>
+                            <div id="skill-tracks-list" class="skill-tracks-list"></div>
+                        </div>
+
+                        <div class="glass-card">
+                            <div class="section-header">
+                                <h2 class="section-title">📈 Cognitive &amp; Focus Telemetry</h2>
+                            </div>
+                            <div id="insights-grid" class="insights-grid"></div>
+                        </div>
+                    </div>
+
+                    <!-- 3D Tilt Badge Gallery -->
+                    <section class="dash-section glass-card">
+                        <div class="section-header">
+                            <h2 class="section-title">🏅 3D Commendation Medals (Hover to Tilt)</h2>
+                        </div>
+                        <div id="badge-gallery" class="badge-gallery-grid"></div>
+                    </section>
+
+                    <!-- Mistake Notebook -->
+                    <section class="dash-section glass-card">
+                        <div class="section-header">
+                            <h2 class="section-title">📓 Mistake Notebook (Thinking Coach Review)</h2>
+                        </div>
+                        <div id="mistake-notebook-list" class="task-list"></div>
+                    </section>
+
+                    <div class="bottom-spacer"></div>
+                </div>
+            </div>
+
+            <!-- ──────────────────────────────────────────────────
+                 VIEW 6: GLOBAL SEARCH
+                 ────────────────────────────────────────────────── -->
+            <div id="view-search" class="view" role="tabpanel" aria-label="Search">
+                <div class="view-scroll">
+                    <div class="search-header">
+                        <div class="search-input-wrap">
+                            <svg class="search-icon-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                            </svg>
+                            <input type="search" id="search-input" class="search-input" placeholder="Search tasks, chapters, subjects, notes…" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="Search" />
+                            <button id="search-clear" class="search-clear-btn hidden" aria-label="Clear search">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                            </button>
+                        </div>
+                        <div class="filter-chips" id="filter-chips" role="group" aria-label="Search filters">
+                            <button class="chip" data-filter="pending" id="chip-pending">⏳ Pending</button>
+                            <button class="chip" data-filter="today"   id="chip-today">📅 Due Today</button>
+                            <button class="chip" data-filter="urgent"  id="chip-urgent">🔴 Urgent</button>
+                            <button class="chip" data-filter="done"    id="chip-done">✅ Done</button>
+                            <button class="chip" data-filter="general" id="chip-general">📌 General</button>
+                        </div>
+                    </div>
+                    <div id="search-results" class="task-list">
+                        <div class="search-placeholder" id="search-placeholder">
+                            <div class="empty-icon-wrap" style="font-size:2.5rem">🔍</div>
+                            <p class="empty-title">Start typing to search</p>
+                            <p class="empty-sub">Searches across all tasks, 82 NCERT chapters &amp; subjects</p>
+                        </div>
+                    </div>
+                    <div class="bottom-spacer"></div>
+                </div>
+            </div>
+
+        </main>
+
+    </div><!-- /.workspace-shell -->
+
+</div><!-- /#app -->
+
+<!-- ═══ FAB POP-UP MENU ═══ -->
+<div id="fab-backdrop" class="fab-backdrop hidden" aria-hidden="true"></div>
+<div id="fab-menu" class="fab-menu hidden" role="menu" aria-label="Add new item">
+    <div class="fab-menu-item" id="fam-add-subject" role="menuitem" tabindex="0" aria-label="Add new subject">
+        <div class="fam-icon-wrap fam-icon-subject">📚</div>
+        <div class="fam-label">
+            <span class="fam-title">New Subject</span>
+            <span class="fam-sub">Create a custom subject hub</span>
+        </div>
+    </div>
+    <div class="fab-menu-item" id="fam-general-task" role="menuitem" tabindex="0" aria-label="Add general task">
+        <div class="fam-icon-wrap fam-icon-general">📌</div>
+        <div class="fam-label">
+            <span class="fam-title">General Task</span>
+            <span class="fam-sub">Personal reminder, hardware project, etc.</span>
+        </div>
+    </div>
+    <div class="fab-menu-item" id="fam-subject-task" role="menuitem" tabindex="0" aria-label="Add task with subject">
+        <div class="fam-icon-wrap fam-icon-task">📝</div>
+        <div class="fam-label">
+            <span class="fam-title">Task with Subject</span>
+            <span class="fam-sub">Homework, revision, classwork</span>
+        </div>
+    </div>
+</div>
+
+<!-- ═══ SUBJECT PANEL (Slide-Over Drawer) ═══ -->
+<div id="subject-panel" class="subject-panel" role="dialog" aria-modal="true" aria-label="Subject detail">
+    <div class="panel-topbar">
+        <button id="panel-back" class="panel-back-btn" aria-label="Go back">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Subjects
+        </button>
+        <button id="panel-add-task-btn" class="btn btn-sm btn-primary" aria-label="Add task for this subject">+ Task</button>
+    </div>
+    <div class="panel-subject-header" id="panel-subject-header">
+        <div class="panel-subject-icon-wrap" id="panel-subject-icon-wrap">
+            <span id="panel-subject-icon" class="panel-subject-icon-text"></span>
+        </div>
+        <div class="panel-subject-info">
+            <h2 id="panel-subject-name" class="panel-subject-name"></h2>
+            <p id="panel-subject-book" class="panel-subject-book"></p>
+        </div>
+    </div>
+    <div class="panel-progress-section">
+        <div class="progress-label-row">
+            <span class="progress-label-text">Overall Progress</span>
+            <span id="panel-progress-pct" class="progress-pct-text">0%</span>
+        </div>
+        <div class="progress-bar-track">
+            <div id="panel-progress-fill" class="progress-bar-fill" style="width:0%"></div>
+        </div>
+    </div>
+    <div class="panel-body-scroll" id="panel-body-scroll">
+        <div id="chapter-list" class="chapter-list"></div>
+        <button id="add-custom-chapter-btn" class="add-chapter-btn" aria-label="Add custom chapter">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Custom Chapter
+        </button>
+    </div>
+</div>
+<div id="panel-backdrop" class="panel-backdrop hidden"></div>
+
+<!-- ═══ SUBJECT TASK MODAL ═══ -->
+<div id="quickadd-overlay" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-label="Add task with subject">
+    <div id="quickadd-sheet" class="modal-sheet">
+        <div class="modal-handle" aria-hidden="true"></div>
+        <div class="modal-header">
+            <h2 class="modal-title" id="qa-modal-heading">📝 Task with Subject</h2>
+            <button id="quickadd-close" class="modal-close-btn" aria-label="Close">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="form-label" for="qa-title">Task Title <span class="required">*</span></label>
+                <input type="text" id="qa-title" class="form-input" placeholder="e.g., Complete Exercise 6.2, Revise Chapter 5…" maxlength="120" />
+            </div>
+            <div id="qa-subject-field-wrap" class="form-group">
+                <label class="form-label" for="qa-subject">Subject <span class="required">*</span> <span class="form-hint">(mandatory)</span></label>
+                <select id="qa-subject" class="form-select">
+                    <option value="">— Select Subject —</option>
+                </select>
+                <div id="qa-subject-error" class="field-error hidden">⚠️ Please select a subject to continue.</div>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="qa-chapter">Chapter</label>
+                <select id="qa-chapter" class="form-select">
+                    <option value="">Select Chapter</option>
+                </select>
+            </div>
+            <div class="form-row-2">
+                <div class="form-group">
+                    <label class="form-label" for="qa-date">Due Date</label>
+                    <input type="date" id="qa-date" class="form-input" />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Priority</label>
+                    <div class="priority-toggle" role="group" aria-label="Priority">
+                        <button type="button" class="prio-btn active" data-priority="normal" id="prio-normal">Normal</button>
+                        <button type="button" class="prio-btn prio-urgent" data-priority="urgent" id="prio-urgent">🔴 Urgent</button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="qa-notes">Notes</label>
+                <textarea id="qa-notes" class="form-input form-textarea" placeholder="Page numbers, instructions, board notes…" rows="2"></textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">📷 Attach Photo <span class="form-hint">(auto-compressed to ≤500KB)</span></label>
+                <div class="image-upload-wrap" id="image-upload-wrap">
+                    <input type="file" id="qa-image" accept="image/*" class="hidden" aria-label="Attach image" />
+                    <div id="image-preview-area" class="image-preview-empty">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                        <span>Tap to attach a photo</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="qa-cancel" class="btn btn-ghost">Cancel</button>
+            <button id="qa-submit" class="btn btn-primary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Save Task
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ═══ GENERAL TASK MODAL ═══ -->
+<div id="general-task-overlay" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-label="Add general task">
+    <div class="modal-sheet">
+        <div class="modal-handle" aria-hidden="true"></div>
+        <div class="modal-header">
+            <h2 class="modal-title">📌 General Task</h2>
+            <button id="gt-close" class="modal-close-btn" aria-label="Close">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="form-label" for="gt-title">Task Title <span class="required">*</span></label>
+                <input type="text" id="gt-title" class="form-input" placeholder="e.g., ESP32 Sensor Test, Buy stationery…" maxlength="120" />
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="gt-category">Category</label>
+                <select id="gt-category" class="form-select">
+                    <option value="general">📋 General</option>
+                    <option value="personal">🙋 Personal</option>
+                    <option value="reminder">⏰ Reminder</option>
+                    <option value="shopping">🛒 Shopping / Supplies</option>
+                    <option value="other">🔖 Other</option>
+                </select>
+            </div>
+            <div class="form-row-2">
+                <div class="form-group">
+                    <label class="form-label" for="gt-date">Due Date</label>
+                    <input type="date" id="gt-date" class="form-input" />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Priority</label>
+                    <div class="priority-toggle" role="group">
+                        <button type="button" class="prio-btn active" data-priority="normal" id="gt-prio-normal">Normal</button>
+                        <button type="button" class="prio-btn prio-urgent" data-priority="urgent" id="gt-prio-urgent">🔴 Urgent</button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="gt-notes">Notes</label>
+                <textarea id="gt-notes" class="form-input form-textarea" placeholder="Any extra details…" rows="2"></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="gt-cancel" class="btn btn-ghost">Cancel</button>
+            <button id="gt-submit" class="btn btn-primary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Save Task
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ═══ NEW SUBJECT MODAL ═══ -->
+<div id="new-subject-overlay" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-label="Add new subject">
+    <div class="modal-sheet modal-sheet-sm">
+        <div class="modal-handle" aria-hidden="true"></div>
+        <div class="modal-header">
+            <h2 class="modal-title">📚 Add New Subject</h2>
+            <button id="ns-close" class="modal-close-btn" aria-label="Close">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-row-2">
+                <div class="form-group" style="flex:0 0 56px">
+                    <label class="form-label" for="ns-icon">Icon</label>
+                    <input type="text" id="ns-icon" class="form-input" placeholder="📖" maxlength="4" style="font-size:22px; text-align:center; padding:6px;" />
+                </div>
+                <div class="form-group" style="flex:1">
+                    <label class="form-label" for="ns-name">Subject Name <span class="required">*</span></label>
+                    <input type="text" id="ns-name" class="form-input" placeholder="e.g., Sanskrit, Robotics…" maxlength="40" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="ns-subtitle">Subtitle / Book Name</label>
+                <input type="text" id="ns-subtitle" class="form-input" placeholder="e.g., Kaveri, PW Foundation…" maxlength="60" />
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="ns-color">Accent Color</label>
+                <div class="color-picker-row">
+                    <input type="color" id="ns-color" class="color-input" value="#7C6FFF" />
+                    <div class="color-presets" id="color-presets">
+                        <button type="button" class="color-preset" style="background:#7C6FFF" data-color="#7C6FFF" title="Purple"></button>
+                        <button type="button" class="color-preset" style="background:#00D4AA" data-color="#00D4AA" title="Teal"></button>
+                        <button type="button" class="color-preset" style="background:#4A9EFF" data-color="#4A9EFF" title="Blue"></button>
+                        <button type="button" class="color-preset" style="background:#FF6B6B" data-color="#FF6B6B" title="Red"></button>
+                        <button type="button" class="color-preset" style="background:#FFA502" data-color="#FFA502" title="Orange"></button>
+                        <button type="button" class="color-preset" style="background:#A78BFA" data-color="#A78BFA" title="Violet"></button>
+                        <button type="button" class="color-preset" style="background:#06B6D4" data-color="#06B6D4" title="Cyan"></button>
+                        <button type="button" class="color-preset" style="background:#2ED573" data-color="#2ED573" title="Green"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="ns-cancel" class="btn btn-ghost">Cancel</button>
+            <button id="ns-submit" class="btn btn-primary">Create Subject Hub</button>
+        </div>
+    </div>
+</div>
+
+<!-- ═══ EXAM COUNTDOWN MODAL (Supports Multi-Day Ranges) ═══ -->
+<div id="exam-modal-overlay" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-label="Set exam countdown">
+    <div class="modal-sheet modal-sheet-sm">
+        <div class="modal-handle" aria-hidden="true"></div>
+        <div class="modal-header">
+            <h2 class="modal-title">🎯 Manage Exam Countdowns</h2>
+            <button id="exam-modal-close" class="modal-close-btn" aria-label="Close">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="form-label" for="exam-name-input">Exam Name <span class="required">*</span></label>
+                <select id="exam-name-input" class="form-select">
+                    <option value="">— Select Exam —</option>
+                    <option value="PT-1">PT-1 (Periodic Test 1)</option>
+                    <option value="PT-2">PT-2 (Cumulative PT-1 + PT-2)</option>
+                    <option value="Half Yearly">Half Yearly Exam</option>
+                    <option value="PT-3">PT-3 (Cumulative PT-1 + PT-2 + PT-3)</option>
+                    <option value="Annual Exam">Yearly Exam (100% Syllabus)</option>
+                    <option value="custom">✏️ Custom…</option>
+                </select>
+            </div>
+            <div class="form-group hidden" id="exam-custom-wrap">
+                <label class="form-label" for="exam-custom-name">Custom Exam Name</label>
+                <input type="text" id="exam-custom-name" class="form-input" placeholder="e.g., Revision Test 2, Science Practical…" maxlength="40" />
+            </div>
+            <div class="form-row-2">
+                <div class="form-group">
+                    <label class="form-label" for="exam-date-input">Start Date <span class="required">*</span></label>
+                    <input type="date" id="exam-date-input" class="form-input" />
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="exam-end-date-input">End Date <span class="form-hint">(optional)</span></label>
+                    <input type="date" id="exam-end-date-input" class="form-input" />
+                </div>
+            </div>
+            <div id="existing-exams-wrap" class="existing-exams-wrap hidden">
+                <p class="form-label" style="margin-bottom:6px">Scheduled Exams</p>
+                <div id="existing-exams-list" class="existing-exams-list"></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="exam-cancel" class="btn btn-ghost">Cancel</button>
+            <button id="exam-submit" class="btn btn-primary">Save Exam</button>
+        </div>
+    </div>
+</div>
+
+<!-- ═══ CUSTOM CHAPTER MODAL ═══ -->
+<div id="chapter-modal-overlay" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-label="Add custom chapter">
+    <div class="modal-sheet modal-sheet-sm">
+        <div class="modal-handle" aria-hidden="true"></div>
+        <div class="modal-header">
+            <h2 class="modal-title">➕ Add Custom Chapter</h2>
+            <button id="chapter-modal-close" class="modal-close-btn" aria-label="Close">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="form-label" for="custom-chapter-name">Chapter / Topic Name <span class="required">*</span></label>
+                <input type="text" id="custom-chapter-name" class="form-input" placeholder="e.g., Extra Practice: Polynomials, PW Lecture 4…" maxlength="100" />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="chapter-cancel" class="btn btn-ghost">Cancel</button>
+            <button id="chapter-submit" class="btn btn-primary">Add Chapter</button>
+        </div>
+    </div>
+</div>
+
+<!-- ═══ TASK DETAIL MODAL ═══ -->
+<div id="task-detail-overlay" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-label="Task details">
+    <div class="modal-sheet modal-sheet-sm">
+        <div class="modal-handle" aria-hidden="true"></div>
+        <div class="modal-header">
+            <h2 class="modal-title" id="detail-title">Task Details</h2>
+            <button id="task-detail-close" class="modal-close-btn" aria-label="Close">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        <div class="modal-body" id="task-detail-body"></div>
+        <div class="modal-footer">
+            <button id="task-delete-btn" class="btn btn-danger">🗑 Delete</button>
+            <button id="task-edit-btn" class="btn btn-ghost">✏️ Edit</button>
+            <button id="task-detail-close2" class="btn btn-primary">Done</button>
+        </div>
+    </div>
+</div>
+
+<!-- ═══ EDIT SUBJECT MODAL ═══ -->
+<div id="edit-subject-overlay" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-label="Edit subject">
+    <div class="modal-sheet modal-sheet-sm">
+        <div class="modal-handle" aria-hidden="true"></div>
+        <div class="modal-header">
+            <h2 class="modal-title">✏️ Edit Subject</h2>
+            <button id="es-close" class="modal-close-btn" aria-label="Close">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-row-2">
+                <div class="form-group" style="flex:0 0 56px">
+                    <label class="form-label" for="es-icon">Icon</label>
+                    <input type="text" id="es-icon" class="form-input" maxlength="4" style="font-size:22px; text-align:center; padding:6px;" />
+                </div>
+                <div class="form-group" style="flex:1">
+                    <label class="form-label" for="es-name">Subject Name <span class="required">*</span></label>
+                    <input type="text" id="es-name" class="form-input" placeholder="Subject name…" maxlength="40" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="es-subtitle">Book / Subtitle</label>
+                <input type="text" id="es-subtitle" class="form-input" placeholder="e.g., Kaveri, Ganita Manjari…" maxlength="60" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Accent Color</label>
+                <div class="color-picker-row">
+                    <input type="color" id="es-color" class="color-input" value="#7C6FFF" />
+                    <div class="color-presets" id="es-color-presets">
+                        <button type="button" class="color-preset" style="background:#7C6FFF" data-color="#7C6FFF" title="Purple"></button>
+                        <button type="button" class="color-preset" style="background:#00D4AA" data-color="#00D4AA" title="Teal"></button>
+                        <button type="button" class="color-preset" style="background:#4A9EFF" data-color="#4A9EFF" title="Blue"></button>
+                        <button type="button" class="color-preset" style="background:#FF6B6B" data-color="#FF6B6B" title="Red"></button>
+                        <button type="button" class="color-preset" style="background:#FFA502" data-color="#FFA502" title="Orange"></button>
+                        <button type="button" class="color-preset" style="background:#A78BFA" data-color="#A78BFA" title="Violet"></button>
+                        <button type="button" class="color-preset" style="background:#06B6D4" data-color="#06B6D4" title="Cyan"></button>
+                        <button type="button" class="color-preset" style="background:#2ED573" data-color="#2ED573" title="Green"></button>
+                        <button type="button" class="color-preset" style="background:#FF4757" data-color="#FF4757" title="Crimson"></button>
+                    </div>
+                </div>
+            </div>
+            <p class="form-hint" style="margin-top:var(--sp-2); font-size:12px; color:var(--text-3)">💡 Changing a subject's details preserves all chapter progress.</p>
+        </div>
+        <div class="modal-footer">
+            <button id="es-delete-btn" class="btn btn-danger hidden">🗑 Delete Subject</button>
+            <button id="es-cancel" class="btn btn-ghost">Cancel</button>
+            <button id="es-submit" class="btn btn-primary">Save Changes</button>
+        </div>
+    </div>
+</div>
+
+<!-- ═══ CREATE FLASHCARD MODAL ═══ -->
+<div id="fc-modal-overlay" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-label="Create Flashcard">
+    <div class="modal-sheet modal-sheet-sm">
+        <div class="modal-handle" aria-hidden="true"></div>
+        <div class="modal-header">
+            <h2 class="modal-title">🃏 Create Active Recall Flashcard</h2>
+            <button id="fc-modal-close" class="modal-close-btn" aria-label="Close">✕</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="form-label" for="fc-subject-select">Subject Deck <span class="required">*</span></label>
+                <select id="fc-subject-select" class="form-select"></select>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="fc-question-input">Question / Prompt (Front) <span class="required">*</span></label>
+                <textarea id="fc-question-input" class="form-input form-textarea" placeholder="e.g., State Newton's Second Law of Motion and its formula." rows="2"></textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="fc-answer-input">Answer / Formula (Back) <span class="required">*</span></label>
+                <textarea id="fc-answer-input" class="form-input form-textarea" placeholder="e.g., The rate of change of momentum is directly proportional to the applied force: F = ma." rows="3"></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="fc-modal-cancel" class="btn btn-ghost">Cancel</button>
+            <button id="fc-modal-save" class="btn btn-primary">Save Card</button>
+        </div>
+    </div>
+</div>
+
+<!-- ═══ CHALLENGE ME (THINKING COACH) OVERLAY ═══ -->
+<div id="challenge-overlay" class="focus-overlay hidden" role="dialog" aria-modal="true" aria-label="Thinking Coach Challenge Mode">
+    <button id="challenge-close" class="focus-close-btn" aria-label="Exit Challenge">✕ Exit</button>
+    <div class="challenge-card glass-card">
+        <div class="challenge-top-row">
+            <span class="biome-pill">🧠 Socratic Thinking Coach</span>
+            <span id="challenge-step-indicator" class="count-badge">Question 1 of 3</span>
+        </div>
+        <h2 id="challenge-chapter-title" class="challenge-chap-name">Chapter Mastery Challenge</h2>
+        <p id="challenge-question-text" class="challenge-q-text">Question loads here…</p>
+
+        <textarea id="challenge-input" class="form-input form-textarea" rows="3" placeholder="Type your reasoning first (minimum 10 characters to unlock the model answer)…"></textarea>
+
+        <div id="challenge-action-row" class="challenge-actions">
+            <button id="challenge-reveal-btn" class="btn btn-primary" disabled>Reveal Model Answer</button>
+            <button id="challenge-stuck-btn" class="btn btn-ghost">I'm stuck (Count as Missed)</button>
+        </div>
+
+        <div id="challenge-solution-box" class="challenge-solution-box hidden">
+            <div class="solution-block">
+                <h4>✅ What a strong answer includes:</h4>
+                <p id="challenge-strong-ans"></p>
+            </div>
+            <div class="solution-block whatif-block">
+                <h4>🔭 Counter-Question ("What if…?"):</h4>
+                <p id="challenge-whatif-ans"></p>
+            </div>
+            <div class="challenge-rate-row">
+                <button class="btn btn-success" data-score="1">🎯 Got it (100%)</button>
+                <button class="btn btn-warning" data-score="0.5">⚖️ Partly (50%)</button>
+                <button class="btn btn-danger" data-score="0">❌ Missed (0%)</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══ ZEN FOCUS MODE OVERLAY ═══ -->
+<div id="focus-overlay" class="focus-overlay hidden" role="dialog" aria-modal="true" aria-label="Focus Mode">
+    <button id="focus-close" class="focus-close-btn" aria-label="Exit Focus Mode">✕ Exit</button>
+    <div class="focus-inner">
+        <p class="focus-label">Zen Focus Chamber</p>
+        <div class="focus-duration-pills" id="focus-duration-pills">
+            <button type="button" class="chip" data-mins="15">15m Sprint</button>
+            <button type="button" class="chip active" data-mins="25">25m Pomodoro</button>
+            <button type="button" class="chip" data-mins="50">50m Deep Work</button>
+            <button type="button" class="chip" data-mins="5">5m Break</button>
+        </div>
+        <div class="focus-timer-wrap">
+            <svg class="focus-ring-svg" viewBox="0 0 120 120" aria-hidden="true">
+                <circle class="focus-ring-bg" cx="60" cy="60" r="54" fill="none" stroke-width="6"/>
+                <circle id="focus-arc" class="focus-ring-arc" cx="60" cy="60" r="54" fill="none" stroke-width="6"
+                    stroke-dasharray="339" stroke-dashoffset="0"
+                    transform="rotate(-90 60 60)" stroke-linecap="round"/>
+            </svg>
+            <span id="focus-time" class="focus-time">25:00</span>
+        </div>
+        <p id="focus-task-title" class="focus-task-label">📌 Loading your priority task…</p>
+        <div class="focus-controls">
+            <button id="focus-reset" class="btn btn-ghost focus-ctrl-btn" aria-label="Reset timer">↺ Reset</button>
+            <button id="focus-start" class="btn btn-primary focus-ctrl-btn" aria-label="Start timer">▶ Start</button>
+        </div>
+
+        <!-- Built-In Web Audio Ambient Synthesizer -->
+        <div class="focus-audio-bar glass-card">
+            <span class="focus-audio-title">🎧 Offline Ambient Synth:</span>
+            <div class="audio-track-pills" id="audio-track-pills">
+                <button type="button" class="chip active" data-track="off">🔇 Off</button>
+                <button type="button" class="chip" data-track="space">🌌 Deep Space</button>
+                <button type="button" class="chip" data-track="rain">🌧️ Lofi Rain</button>
+                <button type="button" class="chip" data-track="binaural">🧠 40Hz Gamma</button>
+            </div>
+            <input type="range" id="audio-volume-slider" class="audio-slider" min="0" max="1" step="0.05" value="0.4" aria-label="Ambient sound volume" />
+        </div>
+    </div>
+</div>
+
+<!-- ═══ TOAST CONTAINER & CONFETTI CANVAS ═══ -->
+<div id="toast-container" class="toast-container" aria-live="polite" role="status"></div>
+<canvas id="confetti-canvas" class="confetti-canvas" aria-hidden="true"></canvas>
+
+<!-- ═══ STUDY BUDDY CHATBOT ═══ -->
+<div id="bot-widget" class="bot-widget" aria-label="Study Buddy Bot">
+    <button id="bot-toggle" class="bot-toggle-btn" aria-label="Open Study Buddy Bot" aria-expanded="false" title="Study Buddy Helper">
+        <span class="bot-toggle-emoji">🤖</span>
+        <span class="bot-toggle-label">Helper</span>
+    </button>
+    <div id="bot-panel" class="bot-panel hidden" role="region" aria-label="Chat with Study Buddy">
+        <div class="bot-header">
+            <div class="bot-header-info">
+                <span class="bot-avatar">🤖</span>
+                <div>
+                    <p class="bot-name">StudyFlow Helper</p>
+                    <p class="bot-status">100% Offline · Instant Guide</p>
+                </div>
+            </div>
+            <button id="bot-close" class="bot-close-btn" aria-label="Close chatbot">✕</button>
+        </div>
+        <div id="bot-log" class="bot-log" aria-live="polite" role="log"></div>
+        <div class="bot-input-row">
+            <input id="bot-input" type="text" class="bot-input" placeholder="Ask about tasks, streaks, exams…" autocomplete="off" maxlength="200" aria-label="Type your message" />
+            <button id="bot-send" class="bot-send-btn" aria-label="Send message">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ═══ SEQUENTIAL OFFLINE SCRIPTS (No ES6 import/export) ═══ -->
+<script src="js/db.js"></script>
+<script src="js/data.js"></script>
+<script src="js/quotes.js"></script>
+<script src="js/themes.js"></script>
+<script src="js/bot.js"></script>
+<script src="js/focus.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/quickadd.js"></script>
+<script src="js/search.js"></script>
+<script src="js/subjects.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
